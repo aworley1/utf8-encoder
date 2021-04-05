@@ -43,6 +43,10 @@ class BitArray(private val array: Array<Bit>) {
 
     infix fun join(other: BitArray): BitArray =
         BitArray(array + other.array)
+
+    companion object {
+        fun of(vararg bits: Bit) = BitArray(arrayOf(*bits))
+    }
 }
 
 enum class Bit(val code: Char, val value: Int) {
