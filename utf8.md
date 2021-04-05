@@ -43,13 +43,13 @@ was being used to decode the data, and a single code page may not have all the r
 Unicode is a standard that attempts to solve the previously mentioned problems, providing a code page large enough to cover the scripts of all of the world languages,
 and character encodings to support this.
 
-## UTF-8
+### UTF-8
 UTF-8 is the most popular of the Unicode character encodings. It has a number of advantages over the other variants:
 * It is backwards compatible with the ASCII character encoding described in the previous section
-* It can be space efficient - for US-ASCII, only 1 byte is used per character, 2 bytes will encode characters of almost all Latin-script alphabets and some others. 3 bytes are
-required to encode many eastern characters. This is also a criticism that Unicode/UTF-8 are western-centric.
+* It can be space efficient - for US-ASCII, only 1 byte is used per character, 2 bytes will encode characters of almost all Latin-script alphabets and others including Greek and
+  Hebrew. 3 bytes are required to encode Chinese/Japanese characters. This is also a criticism that Unicode/UTF-8 are western-centric.
 
-### Algorithm description
+#### Algorithm description
 
 For code points less than `0x80` (128) the code point value is simply encoded into natural binary and padded with leading zeros to 8 bits. As the code points are the same as
 ASCII in this range, and the character encoding is the same, this supports backwards compatibility with ASCII.
@@ -73,7 +73,7 @@ First 2 bits: 10 (continuation marker)
 Remaining 6 bits: The next 6 bits of the binary representation of the code point
 ```
 
-### An example
+#### An example
 
 `€` - code point `0x20ac` - taken from the Wikipedia UTF-8 article
 
@@ -95,3 +95,8 @@ and prepend the relevant codes to these to create the three bytes:
 10000010 (prepend 10 - the continuation marker)
 10101100 (prepend 10 - the continuation marker)
 ```
+
+#### An implementation in Kotlin
+
+I've written a (not production ready) implementation of the encoding algorithm in Kotlin for learning purposes. You can see the code at:
+https://github.com/aworley1/utf8-encoder/blob/master/src/main/kotlin/Utf8Encoder.kt
